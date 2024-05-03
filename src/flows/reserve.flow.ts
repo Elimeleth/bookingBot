@@ -10,10 +10,4 @@ No lo olvides, es un regalo para ti ☺️
 https://calendly.com/<TU-LINK-CALENDLY>`
 
 export default addKeyword(['RESERVAR', 'reservar'])
-    .addAction(async (ctx, { gotoFlow }) => {
-        const re = /1498865/
-        if (!re.test(ctx.from)) {
-            return gotoFlow(devnullFlow)
-        }
-    })
     .addAnswer(rsrv_msg)

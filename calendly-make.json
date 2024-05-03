@@ -1,0 +1,290 @@
+{
+    "name": "Integration Webhooks, Google Calendar",
+    "flow": [
+        {
+            "id": 24,
+            "module": "calendly:watchInvitees",
+            "version": 2,
+            "parameters": {
+                "__IMTHOOK__": 1336512
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -406,
+                    "y": -347
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "My Calendly Event webhook"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:calendly4",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 25,
+            "module": "whatsapp-business-cloud:sendMessage",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 2567444
+            },
+            "mapper": {
+                "to": "{{24.questions_and_answers[].answer}}",
+                "text": {
+                    "body": "Gracias por reservar .\n\nPero eso no es todo, te quiero regalar la posibilidad de estar atento a todas nuestras novedades en nuestro apartado web.\n\nhttps://gogh.flippoapp.com/ideas/shurupitos/",
+                    "preview_url": true
+                },
+                "type": "text",
+                "fromId": "276945062161824"
+            },
+            "metadata": {
+                "designer": {
+                    "x": -133,
+                    "y": -342
+                },
+                "restore": {
+                    "expect": {
+                        "text": {
+                            "nested": {
+                                "preview_url": {
+                                    "mode": "chose"
+                                }
+                            }
+                        },
+                        "type": {
+                            "label": "Text"
+                        },
+                        "fromId": {
+                            "mode": "chose",
+                            "label": "Gogh (+58 412-0522630)"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "whatsapp-business-cloud2"
+                            },
+                            "label": "My WhatsApp Business Cloud connection (Elimeleth)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:whatsapp-business-cloud2",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "type": "hidden"
+                    },
+                    {
+                        "name": "fromId",
+                        "type": "select",
+                        "label": "Sender ID",
+                        "required": true
+                    },
+                    {
+                        "name": "to",
+                        "type": "text",
+                        "label": "Receiver",
+                        "required": true
+                    },
+                    {
+                        "name": "type",
+                        "type": "select",
+                        "label": "Message Type",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "text",
+                                "image",
+                                "audio",
+                                "video",
+                                "document",
+                                "sticker",
+                                "location",
+                                "contacts",
+                                "interactive"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "text",
+                        "spec": [
+                            {
+                                "name": "body",
+                                "type": "text",
+                                "label": "Body",
+                                "required": true,
+                                "validate": {
+                                    "max": 4096
+                                }
+                            },
+                            {
+                                "name": "preview_url",
+                                "type": "boolean",
+                                "label": "Preview URL",
+                                "required": true
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Text"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 26,
+            "module": "whatsapp-business-cloud:sendMessage",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 2567444
+            },
+            "mapper": {
+                "to": "{{24.questions_and_answers[].answer}}",
+                "text": {
+                    "body": "Acá te comparto el link de tu reserva 👇🏽\n{{24.scheduled_event.uri}}\n\nPuedes cancelar en cualquier momento a travez del siguiente link 👇🏽\n{{24.cancel_url}}\n\nó reagendar desde👇🏽\n{{24.reschedule_url}}",
+                    "preview_url": false
+                },
+                "type": "text",
+                "fromId": "276945062161824"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 136,
+                    "y": -347
+                },
+                "restore": {
+                    "expect": {
+                        "text": {
+                            "nested": {
+                                "preview_url": {
+                                    "mode": "chose"
+                                }
+                            }
+                        },
+                        "type": {
+                            "label": "Text"
+                        },
+                        "fromId": {
+                            "mode": "chose",
+                            "label": "Gogh (+58 412-0522630)"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "whatsapp-business-cloud2"
+                            },
+                            "label": "My WhatsApp Business Cloud connection (Elimeleth)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:whatsapp-business-cloud2",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "type": "hidden"
+                    },
+                    {
+                        "name": "fromId",
+                        "type": "select",
+                        "label": "Sender ID",
+                        "required": true
+                    },
+                    {
+                        "name": "to",
+                        "type": "text",
+                        "label": "Receiver",
+                        "required": true
+                    },
+                    {
+                        "name": "type",
+                        "type": "select",
+                        "label": "Message Type",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "text",
+                                "image",
+                                "audio",
+                                "video",
+                                "document",
+                                "sticker",
+                                "location",
+                                "contacts",
+                                "interactive"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "text",
+                        "spec": [
+                            {
+                                "name": "body",
+                                "type": "text",
+                                "label": "Body",
+                                "required": true,
+                                "validate": {
+                                    "max": 4096
+                                }
+                            },
+                            {
+                                "name": "preview_url",
+                                "type": "boolean",
+                                "label": "Preview URL",
+                                "required": true
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Text"
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

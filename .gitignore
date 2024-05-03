@@ -1,0 +1,10 @@
+node_modules/
+.env
+*.log
+dist/
+cache_*/
+*.bin
+data/
+*.db
+assets/
+bot_sessions

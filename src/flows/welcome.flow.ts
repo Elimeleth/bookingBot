@@ -1,7 +1,6 @@
 import { EVENTS, addKeyword } from "@builderbot/bot";
 import reserveFlow from "./reserve.flow";
 import faqFlow from "./faq.flow";
-import devnullFlow from "./devnull.flow";
 
 const wlcom_msg = `Hola! {name}
 
@@ -22,11 +21,7 @@ por eso quiero ofrecerte un set de preguntas respuestas para que hemos ido desar
 Te las dejo aqui abajo`
 
 export default addKeyword(EVENTS.WELCOME)
-    .addAction(async (ctx, { flowDynamic, gotoFlow }) => {
-        const re = /1498865/
-        if (!re.test(ctx.from)) {
-            return gotoFlow(devnullFlow)
-        }
+    .addAction(async (ctx, { flowDynamic }) => {
         await flowDynamic(wlcom_msg.replaceAll('{name}', ctx.name))
     })
     .addAnswer('¿Deseas reservar? (*SI*/*NO*)', { capture: true }, async (ctx, { gotoFlow }) => {
